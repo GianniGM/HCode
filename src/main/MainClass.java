@@ -28,12 +28,12 @@ public class MainClass {
 		
 		int height = in.nextInt();
 		int length = in.nextInt();
-        
+        in.nextLine();
 //        debug
 //        System.out.println(height + " " + length);
         
       	int operations = 0;
-	    for (int i = -1; i < height; i++) {
+	    for (int i = 0; i < height; i++) {
 	        String row = in.nextLine();
 	        operations = operations + toPaintHorizontalLine(row, i, length, height, listaComandi);
 	    }

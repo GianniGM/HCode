@@ -45,43 +45,37 @@ public class MainClass {
 	    for(int col = 0; col < length; col++)	
 	    	toPaintVerticalLine(matrix, col, height, length , comandiColonne);
     
-	    
-	    System.out.println(comandiRighe.size());
-	    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
-			System.out.println(it.next().toString());			
-		}    
-	    
-	    System.out.println("------------------------------------------------");
-	    
-	    System.out.println(comandiColonne.size());
-	    for (Iterator<Paint> it = comandiColonne.iterator(); it.hasNext();) {
-			System.out.println(it.next().toString());			
-		}    
-     
+	    if(comandiRighe.size()<= comandiColonne.size()){
+		    System.out.println(comandiRighe.size());
+		    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
+				System.out.println(it.next().toString());			
+			}    
+	    }else{
+		    System.out.println(comandiColonne.size());
+		    for (Iterator<Paint> it = comandiColonne.iterator(); it.hasNext();) {
+				System.out.println(it.next().toString());			
+			}    
+	    }
         in.close(); 
 	}
 
 
 
-	private static void toPaintVerticalLine(int[][] is, int col, int h, int l, ArrayList<Paint> lista) {
+	private static void toPaintVerticalLine(int[][] matrix, int col, int h, int l, ArrayList<Paint> lista) {
 		int r1=0, r2=-1;
-		
+
 		while (r1 < h) {
-			if(is[r1][col] == 1){
+			if(matrix[r1][col] == 1){
 				int j = r1;
-				while(j < h){
-					if(is[j][col] == 1){
-						r2=j;
-						if(r2==h-1){
-							lista.add(new Paint(r1, r2, col, col));
-						}
-					}else{
-						if(Paint.isPaintable(r1, r2, col, col, h, l))
-							lista.add(new Paint(r1, r2, col, col));
-						j=h;
-						r1=r2;
-					}	
+				r2=-1;
+				while(j < h && matrix[j][col] == 1){
+					r2=j;
 					j++;
+				}
+				
+				if(r2 != -1 && Paint.isPaintable(r1, r2, col, col, h, l)){
+					lista.add(new Paint(r1, r2, col, col));
+					r1=r2;	
 				}
 			}
 			r1++;
@@ -97,19 +91,15 @@ public class MainClass {
 		while (c1 < row.length) {
 			if(row[c1] == 1){
 				int j = c1;
-				while(j < row.length){
-					if(row[j] == 1){
-						c2=j;
-						if(c2==row.length-1){
-							lista.add(new Paint(indexRow, indexRow, c1, c2));
-						}
-					}else{
-						if(Paint.isPaintable(indexRow, indexRow, c1, c2, h, l))
-							lista.add(new Paint(indexRow, indexRow, c1, c2));
-						j=row.length;
-						c1=c2;
-					}	
+				c2=-1;
+				while(j < row.length && row[j] == 1){
+					c2=j;
 					j++;
+				}
+				
+				if(c2 != -1 && Paint.isPaintable(indexRow, indexRow, c1, c2, h, l)){
+					lista.add(new Paint(indexRow, indexRow, c1, c2));
+					c1=c2;
 				}
 			}
 			c1++;

@@ -21,7 +21,7 @@ public class PaintLine implements Commands {
 				return true;
 			}
 		} else if (r1 == r2){
-			if((c1 <= c2 && c1 >= 0 && c2 < length) && (r1 >= 0 && r1 < height)){
+			if((c1 < c2 && c1 >= 0 && c2 < length) && (r1 >= 0 && r1 < height)){
 				return true;
 			}
 		}		

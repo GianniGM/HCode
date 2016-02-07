@@ -39,7 +39,6 @@ public class MainClass {
 	        matrix[i] = rowToInt(in.nextLine());
 	    }
 	    
-	    for(int i = 0; i <)
      
         in.close(); 
 	}

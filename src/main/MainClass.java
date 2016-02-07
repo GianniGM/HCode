@@ -32,13 +32,12 @@ public class MainClass {
 //        debug
 //        System.out.println(height + " " + length);
         
-      	int operations = 0;
 	    for (int i = 0; i < height; i++) {
 	        String row = in.nextLine();
-	        operations = operations + toPaintHorizontalLine(row, i, length, height, listaComandi);
+	        toPaintHorizontalLine(row, i, length, height, listaComandi);
 	    }
 	    
-	    System.out.println(operations);
+	    System.out.println(listaComandi.size());
 	    for (Iterator<Commands> it = listaComandi.iterator(); it.hasNext();) {
 			System.out.println(it.next().ToString());			
 		}        
@@ -47,30 +46,23 @@ public class MainClass {
 	}
 
 	//d sistemare è tutto sbagliato ragionarci sopra sono invertiti i valori di colonne e righe
-	private static int toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<Commands> lista) {
+	private static void toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<Commands> lista) {
 		int c1 = -1, c2 = -1;
-		int operations = 0;
 		
-			c1 = row.indexOf('#', 0);
-			if(c1 != -1){
-				int i = c1;
-				while(i < row.length()){
-					if(row.charAt(i) == '#'){
-						c2=i;
-					}else{
-						if (PaintLine.isPaintable(indexRow, indexRow, c1, c2, h, l)){
-							lista.add(new PaintLine(indexRow, indexRow, c1, c2));
-							operations++;
-							c1=row.indexOf('#', i);
-							c2=-1;
-						}else{
-							break;
-						}
-					}
-					i++;
+		if((c1 = row.indexOf('#', 0)) != -1){
+			while(c1 >=0 && c1<row.length() && c2<row.length()){
+				//esiste un punto nella riga
+				if(row.indexOf('.',c1) >= 0){
+					c2=row.indexOf('.',c1)-1;
+					lista.add(new PaintLine(indexRow, indexRow, c1, c2));
+					c1 = row.indexOf('#', c2+1);
+				}else{
+				//l'immagine termina con un cancelletto
+					lista.add(new PaintLine(indexRow, indexRow, c1, row.length()-1));
+					c1 = -1;
 				}
 			}
-			return operations;
 		}
 	}
+}
 

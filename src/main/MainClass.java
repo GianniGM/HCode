@@ -13,7 +13,7 @@ public class MainClass {
 		
 		//Scanner in = new Scanner(System.in);
 		Scanner in = null;
-		ArrayList<PaintLine> listaComandi = new ArrayList<PaintLine>();
+		ArrayList<Paint> listaComandi = new ArrayList<Paint>();
 
 		try {
 			in = new Scanner(new BufferedReader(new FileReader(args[0])));
@@ -38,15 +38,15 @@ public class MainClass {
 	    }
 	    
 	    System.out.println(listaComandi.size());
-	    for (Iterator<PaintLine> it = listaComandi.iterator(); it.hasNext();) {
-			System.out.println(it.next().ToString());			
+	    for (Iterator<Paint> it = listaComandi.iterator(); it.hasNext();) {
+			System.out.println(it.next().toString());			
 		}        
      
         in.close(); 
 	}
 
 	//d sistemare è tutto sbagliato ragionarci sopra sono invertiti i valori di colonne e righe
-	private static void toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<PaintLine> lista) {
+	private static void toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<Paint> lista) {
 		int c1 = -1, c2 = -1;
 		
 		if((c1 = row.indexOf('#', 0)) != -1){
@@ -54,14 +54,21 @@ public class MainClass {
 				//esiste un punto nella riga
 				if(row.indexOf('.',c1) >= 0){
 					c2=row.indexOf('.',c1)-1;
-					lista.add(new PaintLine(indexRow, indexRow, c1, c2));
+					lista.add(new Paint(indexRow, indexRow, c1, c2));
 					c1 = row.indexOf('#', c2+1);
 				}else{
 				//l'immagine termina con un cancelletto
-					lista.add(new PaintLine(indexRow, indexRow, c1, row.length()-1));
+					lista.add(new Paint(indexRow, indexRow, c1, row.length()-1));
 					c1 = -1;
 				}
 			}
+		}
+	}
+	
+	private static void optimizeToVerticalLine(ArrayList<Paint> lista){
+		for (Iterator iterator = lista.iterator(); iterator.hasNext();) {
+			Paint line = (Paint) iterator.next();
+			//cercare i punti verticali di ogni linea
 		}
 	}
 }

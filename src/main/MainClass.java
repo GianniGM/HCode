@@ -13,7 +13,7 @@ public class MainClass {
 		
 		//Scanner in = new Scanner(System.in);
 		Scanner in = null;
-		ArrayList<Commands> listaComandi = new ArrayList<Commands>();
+		ArrayList<PaintLine> listaComandi = new ArrayList<PaintLine>();
 
 		try {
 			in = new Scanner(new BufferedReader(new FileReader(args[0])));
@@ -38,7 +38,7 @@ public class MainClass {
 	    }
 	    
 	    System.out.println(listaComandi.size());
-	    for (Iterator<Commands> it = listaComandi.iterator(); it.hasNext();) {
+	    for (Iterator<PaintLine> it = listaComandi.iterator(); it.hasNext();) {
 			System.out.println(it.next().ToString());			
 		}        
      
@@ -46,7 +46,7 @@ public class MainClass {
 	}
 
 	//d sistemare è tutto sbagliato ragionarci sopra sono invertiti i valori di colonne e righe
-	private static void toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<Commands> lista) {
+	private static void toPaintHorizontalLine(String row,  int indexRow, int h, int l, ArrayList<PaintLine> lista) {
 		int c1 = -1, c2 = -1;
 		
 		if((c1 = row.indexOf('#', 0)) != -1){

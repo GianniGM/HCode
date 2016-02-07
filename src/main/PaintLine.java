@@ -1,6 +1,6 @@
 package main;
 
-public class PaintLine implements Commands {
+public class PaintLine  {
 	private int r1=-1;
 	private int c1=-1;
 	private int r2=-1;

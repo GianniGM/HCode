@@ -35,6 +35,23 @@ public class Paint{
 		return false;
 	}
 	
+	public int getC1(){
+		if(type.compareTo("LINE") == 0){
+			return c1;
+		}else if(type.compareTo("SQUARE") == 0){
+			return c1;
+		}
+		return -1;
+	}
+	
+	public int getC2(){
+		if(type.compareTo("LINE") == 0){
+			return c2;
+		} else {
+			return -1;
+		}
+	}
+	
 	public String getType(){
 		return this.type;
 	}

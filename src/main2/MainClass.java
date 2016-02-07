@@ -1,4 +1,4 @@
-package main;
+package main2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -44,9 +44,15 @@ public class MainClass {
 
 	    for(int col = 0; col < length; col++)	
 	    	toPaintVerticalLine(matrix, col, height, length , comandiColonne);
-    
+
+//	    aggiungere il lavoro di ottimizzazzione
+//	    Ricerca se il valore delle righe è uguale allora
+//	    	se il valore delle colonne è consecutivo
+//	    		se il numero di righe uguali è uguale al numero di comandi trovati 
+//	    		che è uguale ai valori consecutivi è un quadrato
 	    
-	    //DA SISTEMARE
+	    optimize(comandiRighe);
+	    
 	    if(comandiRighe.size()<= comandiColonne.size()){
 		    System.out.println(comandiRighe.size());
 		    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
@@ -58,12 +64,23 @@ public class MainClass {
 				System.out.println(it.next().toString());			
 			}    
 	    }
-	    //to do:
-	    //
-	    
         in.close(); 
 	}
 
+
+	private static void optimize(ArrayList<Paint> lista) {
+		
+		ArrayList<Paint> toErase = new ArrayList<Paint>();
+		
+		for (Paint i : lista) {
+			for (Paint j : lista) {
+				if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
+					toErase.add(j);
+					System.out.println(j.toString());
+				}
+			}
+		}
+	}
 
 
 	private static void toPaintVerticalLine(int[][] matrix, int col, int h, int l, ArrayList<Paint> lista) {
@@ -111,6 +128,8 @@ public class MainClass {
 		}
 	}
 		
+
+	
 	private static int[] convert(String row) {
 		if (row.length()<= 0 ) return null;		
 		

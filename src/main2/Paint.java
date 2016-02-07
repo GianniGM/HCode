@@ -1,4 +1,4 @@
-package main;
+package main2;
 
 public class Paint{
 	private int r1=-1;

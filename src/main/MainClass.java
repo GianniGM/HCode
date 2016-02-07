@@ -64,12 +64,5 @@ public class MainClass {
 			}
 		}
 	}
-	
-	private static void optimizeToVerticalLine(ArrayList<Paint> lista){
-		for (Iterator iterator = lista.iterator(); iterator.hasNext();) {
-			Paint line = (Paint) iterator.next();
-			//cercare i punti verticali di ogni linea
-		}
-	}
 }
 

@@ -5,8 +5,9 @@ public class Paint{
 	private int c1=-1;
 	private int r2=-1;
 	private int c2=-1;
-	private String type=null;
 	private int s;
+
+	private String type=null;
 	
 	public Paint(int r1, int  r2, int  c1, int c2){
 		this.r1 = r1;
@@ -59,6 +60,20 @@ public class Paint{
 				}
 			}
 		}
+		return false;
+	}
+	
+	public static boolean isPaintable(int r1, int  r2, int  c1, int c2, int height, int length){
+		
+		if(c1 == c2){
+			if( (r1 <= r2 && r1 >= 0 && r2 < height && c1 >= 0 && c1 < length)){
+				return true;
+			}
+		} else if (r1 == r2){
+			if((c1 < c2 && c1 >= 0 && c2 < length) && (r1 >= 0 && r1 < height)){
+				return true;
+			}
+		}		
 		return false;
 	}
 }

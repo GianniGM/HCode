@@ -78,12 +78,12 @@ public class MainClass {
 			for (Paint j : lista) {
 				if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
 					if(i.getR1() == j.getR2()){
-						temp = j;
+						temp = i;
 						
 					}else if(temp.getR1()+1 == j.getR1()){
 						//insert first command to optimize						
-						if(!toOptimize.contains(temp)){
-							toOptimize.add(temp);
+						if(!toOptimize.contains(i) && temp == i){
+							toOptimize.add(i);
 						}
 						
 						temp = j;

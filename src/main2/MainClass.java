@@ -71,37 +71,62 @@ public class MainClass {
 	//find in command a potenzial rectangle to optimize in other commands
 	private static void optimize(ArrayList<Paint> lista) {
 		ArrayList<Paint> toOptimize = new ArrayList<Paint>();
+		ArrayList<Paint> nuova = new ArrayList<Paint>();
 		Paint temp = null;
 		
-		
 		for (Paint i : lista) {
-			for (Paint j : lista) {
-				if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
-					if(i.getR1() == j.getR2()){
-						temp = i;
-						
-					}else if(temp.getR1()+1 == j.getR1()){
-						//insert first command to optimize						
-						if(!toOptimize.contains(i) && temp == i){
-							toOptimize.add(i);
+			if(!i.isRemovable()){
+				for (Paint j : lista) {
+					if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
+						if(i.getR1() == j.getR2()){
+							temp = i;
+							
+						}else if(temp.getR1()+1 == j.getR1()){
+							//insert first command to optimize						
+							if(!toOptimize.contains(i) && temp == i){
+								toOptimize.add(i);
+								System.out.println(i.toString());
+							}
+							
+							temp = j;
+							
+							if(!toOptimize.contains(temp)){
+								toOptimize.add(temp);
+								System.out.println(temp.toString());
+							}
 						}
 						
-						temp = j;
-						
-						if(!toOptimize.contains(temp)){
-							toOptimize.add(temp);
-						}
 					}
 				}
+
+				System.out.println("-------------------");
+				if(toOptimize.size() > 0){
+					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
+					int s = 0;
+					if(len % 2 == 0 && len == toOptimize.size()-1){
+						s = len /2;
+						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
+					}
+					
+					for(Paint k : toOptimize){
+						lista.get(lista.indexOf(k)).setRemovable();
+					}
+					
+					toOptimize.clear();
+				}
+			}
+		
+		}
+		
+		
+		for (Paint k : lista) {
+			if(k.isRemovable()){
+				toOptimize.add(k);
 			}
 		}
-
+		lista.removeAll(toOptimize);
+		lista.addAll(nuova);
 		//se è paintable per il quadrato allora aggiungi un quadrato, sennò aggiungi N linee verticale stando attenti che la cosa convenga
-
-		
-		for(Paint i : toOptimize){
-			System.out.println(i.toString());
-		}
 	}
 
 

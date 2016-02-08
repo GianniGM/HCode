@@ -6,7 +6,8 @@ public class Paint{
 	private int r2=-1;
 	private int c2=-1;
 	private int s;
-
+	private boolean removable = false;
+	
 	private String type=null;
 	
 	public Paint(int r1, int  r2, int  c1, int c2){
@@ -23,6 +24,14 @@ public class Paint{
 		this.c1 = c;
 		this.s = s;
 		this.type = "SQUARE";
+	}
+	
+	public void setRemovable() {
+		this.removable = true;
+	}
+	
+	public boolean isRemovable(){
+		return this.removable;
 	}
 	
 	public boolean isPoint(){

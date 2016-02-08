@@ -89,9 +89,11 @@ public class Paint{
 		if(type.compareTo("LINE") == 0){
 			return "PAINT_LINE " + r1 + " " + c1 + " " + r2 + " " + c2;
 		}
+		
 		if(type.compareTo("SQUARE")==0){
 			return "PAINT_SQUARE " + r1 + " " + c1 + " " + s;
 		}
+		
 		return "";
 	}
 	

@@ -108,6 +108,15 @@ public class MainClass {
 						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
 					}
 					
+					if(len < toOptimize.size()-1){
+						for(int k = 0; k < len+1; k++){
+							int c = toOptimize.get(k).getC1();
+							int r1 = toOptimize.get(0).getR1();
+							int r2 = toOptimize.get(toOptimize.size()-1).getR2();
+							nuova.add(new Paint(r1, r2, c, c));		
+						}
+					}
+					
 					for(Paint k : toOptimize){
 						lista.get(lista.indexOf(k)).setRemovable();
 					}

@@ -51,7 +51,8 @@ public class MainClass {
 //	    		se il numero di righe uguali è uguale al numero di comandi trovati 
 //	    		che è uguale ai valori consecutivi è un quadrato
 	    
-	    optimize(comandiRighe);
+	    hOptimize(comandiRighe);
+	    vOptimize(comandiColonne);
 	    
 	    if(comandiRighe.size()<= comandiColonne.size()){
 		    System.out.println(comandiRighe.size());
@@ -68,8 +69,73 @@ public class MainClass {
 	}
 
 
+	private static void vOptimize(ArrayList<Paint> lista) {
+		ArrayList<Paint> toOptimize = new ArrayList<Paint>();
+		ArrayList<Paint> nuova = new ArrayList<Paint>();
+		Paint temp = null;
+		
+		for (Paint i : lista) {
+			if(!i.isRemovable()){
+				for (Paint j : lista) {
+					if(i.getR1() == j.getR1() && i.getR2() == j.getR2()){
+						if(i.getC1() == j.getC2()){
+							temp = i;	
+						}else if(temp.getC1()+1 == j.getC1()){
+							//insert first command to optimize						
+							if(!toOptimize.contains(i) && temp == i){
+								toOptimize.add(i);
+							}
+							
+							temp = j;
+							
+							if(!toOptimize.contains(temp)){
+								toOptimize.add(temp);
+							}
+						}
+						
+					}
+				}
+
+				if(toOptimize.size() > 0){
+					int len = toOptimize.get(0).getR2() - toOptimize.get(0).getR1();
+					int s = 0;
+					if(len % 2 == 0 && len == toOptimize.size()-1){
+						s = len /2;
+						nuova.add(new Paint(toOptimize.get(0).getC1() + s, toOptimize.get(0).getR1() + s, s));
+					}
+					
+					if(len < toOptimize.size()-1){
+						for(int k = 0; k < len+1; k++){
+							int r = toOptimize.get(k).getR1();
+							int c1 = toOptimize.get(0).getC1();
+							int c2 = toOptimize.get(toOptimize.size()-1).getC2();
+							nuova.add(new Paint(r, r, c1, c2));		
+						}
+					}
+					
+					for(Paint k : toOptimize){
+						lista.get(lista.indexOf(k)).setRemovable();
+					}
+					
+					toOptimize.clear();
+				}
+			}
+		
+		}
+		
+		
+		for (Paint k : lista) {
+			if(k.isRemovable()){
+				toOptimize.add(k);
+			}
+		}
+		lista.removeAll(toOptimize);
+		lista.addAll(nuova);		
+	}
+
+
 	//find in command a potenzial rectangle to optimize in other commands
-	private static void optimize(ArrayList<Paint> lista) {
+	private static void hOptimize(ArrayList<Paint> lista) {
 		ArrayList<Paint> toOptimize = new ArrayList<Paint>();
 		ArrayList<Paint> nuova = new ArrayList<Paint>();
 		Paint temp = null;
@@ -85,21 +151,18 @@ public class MainClass {
 							//insert first command to optimize						
 							if(!toOptimize.contains(i) && temp == i){
 								toOptimize.add(i);
-								System.out.println(i.toString());
 							}
 							
 							temp = j;
 							
 							if(!toOptimize.contains(temp)){
 								toOptimize.add(temp);
-								System.out.println(temp.toString());
 							}
 						}
 						
 					}
 				}
 
-				System.out.println("-------------------");
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
 					int s = 0;

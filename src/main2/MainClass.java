@@ -68,41 +68,40 @@ public class MainClass {
 	}
 
 
+	//find in command a potenzial rectangle to optimize in other commands
 	private static void optimize(ArrayList<Paint> lista) {
+		ArrayList<Paint> toOptimize = new ArrayList<Paint>();
+		Paint temp = null;
 		
-		int initLine = 0;
-		int endLine;	
-		while (initLine < lista.size()) {
-			endLine=0;
-
-			//coordinate dei punti caricati dalla classe Paint
-			int initC1=lista.get(initLine).getC1();
-			int initC2=lista.get(initLine).getC2();
-			int j=initLine;				
-			
-			while(j < lista.size()){
-				if(lista.get(j).getC1() == initC1 && lista.get(j).getC2() == initC2){
-					if(lista.get(initLine).getR1()+ lista.get(endLine).getR1() +1 == lista.get(j).getR1()){
-//						System.out.println(initC1 + " " + lista.get(j).getC1() + " | " + initC2 + " " + lista.get(j).getC2()+ " | " + lista.get(j).getR1());
-						endLine = j;
-					}else{
-						j=lista.size();
+		
+		for (Paint i : lista) {
+			for (Paint j : lista) {
+				if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
+					if(i.getR1() == j.getR2()){
+						temp = j;
+						
+					}else if(temp.getR1()+1 == j.getR1()){
+						//insert first command to optimize						
+						if(!toOptimize.contains(temp)){
+							toOptimize.add(temp);
+						}
+						
+						temp = j;
+						
+						if(!toOptimize.contains(temp)){
+							toOptimize.add(temp);
+						}
 					}
 				}
-				j++;
 			}
-			
-			if(initLine < endLine){
-				for(int i=initLine; i < endLine; i++){
-					System.out.println(lista.get(i).toString());
-				}
-				System.out.println("-----------------");
-				initLine=endLine;
-			}
-			
-			initLine++;
 		}
 
+		//se è paintable per il quadrato allora aggiungi un quadrato, sennò aggiungi N linee verticale stando attenti che la cosa convenga
+
+		
+		for(Paint i : toOptimize){
+			System.out.println(i.toString());
+		}
 	}
 
 

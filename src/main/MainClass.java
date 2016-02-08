@@ -58,8 +58,7 @@ public class MainClass {
 				System.out.println(it.next().toString());			
 			}    
 	    }
-	    //to do:
-	    //
+
 	    
         in.close(); 
 	}

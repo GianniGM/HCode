@@ -14,7 +14,8 @@ public class Paint{
 		this.r2 = r2;
 		this.c1 = c1;
 		this.c2 = c2;
-		this.type = "LINE";	
+		if(r2 > r1 && c2 > c1)this.type = "RECTANGLE";
+		else this.type = "LINE";
 	}
 	
 	public Paint(int r, int c, int s){

@@ -70,16 +70,39 @@ public class MainClass {
 
 	private static void optimize(ArrayList<Paint> lista) {
 		
-		ArrayList<Paint> toErase = new ArrayList<Paint>();
-		
-		for (Paint i : lista) {
-			for (Paint j : lista) {
-				if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
-					toErase.add(j);
-					System.out.println(j.toString());
+		int initLine = 0;
+		int endLine;	
+		while (initLine < lista.size()) {
+			endLine=0;
+
+			//coordinate dei punti caricati dalla classe Paint
+			int initC1=lista.get(initLine).getC1();
+			int initC2=lista.get(initLine).getC2();
+			int j=initLine;				
+			
+			while(j < lista.size()){
+				if(lista.get(j).getC1() == initC1 && lista.get(j).getC2() == initC2){
+					if(lista.get(initLine).getR1()+ lista.get(endLine).getR1() +1 == lista.get(j).getR1()){
+//						System.out.println(initC1 + " " + lista.get(j).getC1() + " | " + initC2 + " " + lista.get(j).getC2()+ " | " + lista.get(j).getR1());
+						endLine = j;
+					}else{
+						j=lista.size();
+					}
 				}
+				j++;
 			}
+			
+			if(initLine < endLine){
+				for(int i=initLine; i < endLine; i++){
+					System.out.println(lista.get(i).toString());
+				}
+				System.out.println("-----------------");
+				initLine=endLine;
+			}
+			
+			initLine++;
 		}
+
 	}
 
 

@@ -59,7 +59,7 @@ public class MainClass {
 	    
 	    PrintWriter out = null;
 	    try {
-			out = new PrintWriter(new File("/Users/Gianni/Desktop/output3.txt"));
+			out = new PrintWriter(new File("/Users/Gianni/Desktop/output.txt"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,13 +112,27 @@ public class MainClass {
 					int len = toOptimize.get(0).getR2() - toOptimize.get(0).getR1();
 					boolean remove = false;
 					
-					if(len % 2 == 0 && len == toOptimize.size()-1){
-						int s = len /2;
-						nuova.add(new Paint(toOptimize.get(0).getC1() + s, toOptimize.get(0).getR1() + s, s));
+					if(/*len % 2 == 0 && */len >=(toOptimize.size()-1)/len && len < toOptimize.size()-1){
+						int s = 0;
+						if(len % 2 != 0  && len < toOptimize.size()){
+							nuova.add(new Paint(len, len ,toOptimize.get(0).getC1(), toOptimize.get(0).getC2()));
+							len--;
+						}
+						
+						s = len /2;
+						
+						//forma il quadrato ed elimina i comandi rimanenti
+						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
+						
+						int k = len + 1;
+						while(k < toOptimize.size()){
+							toOptimize.remove(k);
+							k++;
+						}
 						remove = true;
 					}else{					
 						if(len < toOptimize.size()-1){
-							for(int k = 0; k < len+1; k++){
+							for(int k = 0; k < len; k++){
 								int r = toOptimize.get(k).getR1()+k;
 								int c1 = toOptimize.get(0).getC1();
 								int c2 = toOptimize.get(toOptimize.size()-1).getC2();
@@ -156,6 +170,7 @@ public class MainClass {
 		Paint temp = null;
 		
 		for (Paint i : lista) {
+			boolean remove = false;
 			if(!i.isRemovable()){
 				for (Paint j : lista) {
 					if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
@@ -181,12 +196,27 @@ public class MainClass {
 
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
-					boolean remove = false;
-					
-					if(len % 2 == 0 && len == toOptimize.size()-1){
-						int s = (len /2);
+//					boolean remove = false;
+						
+					if(/*len % 2 == 0 && */len >=(toOptimize.size()-1)/len && len < toOptimize.size()-1){
+						int s = 0;
+						if(len % 2 != 0){
+							nuova.add(new Paint(toOptimize.get(0).getR2(), len, toOptimize.get(0).getC2(), toOptimize.get(0).getC2()));
+							len--;
+						}
+						
+						s = len /2;
+						
+						//forma il quadrato ed elimina i comandi rimanenti
 						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
+						
+						int k = len + 1;
+						while(k < toOptimize.size()){
+							toOptimize.remove(k);
+							k++;
+						}
 						remove = true;
+					
 					}else{
 						if(len < toOptimize.size()-1){
 							for(int k = 0; k < len+1; k++){

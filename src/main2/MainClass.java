@@ -59,7 +59,7 @@ public class MainClass {
 	    
 	    PrintWriter out = null;
 	    try {
-			out = new PrintWriter(new File("/Users/Gianni/Desktop/output.txt"));
+			out = new PrintWriter(new File("/Users/Gianni/Desktop/output3.txt"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,10 +110,12 @@ public class MainClass {
 
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getR2() - toOptimize.get(0).getR1();
-					int s = 0;
-					if(len % 2 == 0 && len == toOptimize.size()){
-						s = len /2;
+					boolean remove = false;
+					
+					if(len % 2 == 0 && len == toOptimize.size()-1){
+						int s = len /2;
 						nuova.add(new Paint(toOptimize.get(0).getC1() + s, toOptimize.get(0).getR1() + s, s));
+						remove = true;
 					}else{					
 						if(len < toOptimize.size()-1){
 							for(int k = 0; k < len+1; k++){
@@ -122,12 +124,14 @@ public class MainClass {
 								int c2 = toOptimize.get(toOptimize.size()-1).getC2();
 								nuova.add(new Paint(r, r, c1, c2));		
 							}
+							remove = true;
 						}
 					}
-					for(Paint k : toOptimize){
-						lista.get(lista.indexOf(k)).setRemovable();
+					if (remove) {
+						for (Paint k : toOptimize) {
+							lista.get(lista.indexOf(k)).setRemovable();
+						}
 					}
-					
 					toOptimize.clear();
 				}
 			}
@@ -177,12 +181,13 @@ public class MainClass {
 
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
-					int s = 0;
-					if(len % 2 == 0 && len == toOptimize.size()){
-						s = len /2;
+					boolean remove = false;
+					
+					if(len % 2 == 0 && len == toOptimize.size()-1){
+						int s = (len /2);
 						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
+						remove = true;
 					}else{
-		
 						if(len < toOptimize.size()-1){
 							for(int k = 0; k < len+1; k++){
 								int c = toOptimize.get(k).getC1()+k;
@@ -190,11 +195,14 @@ public class MainClass {
 								int r2 = toOptimize.get(toOptimize.size()-1).getR2();
 								nuova.add(new Paint(r1, r2, c, c));		
 							}
+							remove = true;
 						}
 					}
 					
-					for(Paint k : toOptimize){
-						lista.get(lista.indexOf(k)).setRemovable();
+					if(remove){
+						for(Paint k : toOptimize){
+							lista.get(lista.indexOf(k)).setRemovable();
+						}
 					}
 					
 					toOptimize.clear();

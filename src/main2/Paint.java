@@ -45,36 +45,27 @@ public class Paint{
 		return false;
 	}
 	
-	public int getC1(){
-		if(type.compareTo("LINE") == 0){
-			return c1;
-		}else if(type.compareTo("SQUARE") == 0){
-			return c1;
-		}
-		return -1;
+	public int getC1(){		
+		return c1;
 	}
 	
 	public int getC2(){
 		if(type.compareTo("LINE") == 0){
 			return c2;
 		} else {
-			return -1;
+			return c1;
 		}
 	}
 	
 	public int getR1(){
-		if(type.compareTo("LINE") == 0){
-			return r1;
-		} else {
-			return -1;
-		}	
+		return r1;
 	}
 	
 	public int getR2(){
 		if(type.compareTo("LINE") == 0){
 			return r2;
 		} else {
-			return -1;
+			return r1;
 		}
 	}
 	

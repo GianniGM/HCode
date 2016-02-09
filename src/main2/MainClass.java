@@ -111,20 +111,19 @@ public class MainClass {
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getR2() - toOptimize.get(0).getR1();
 					int s = 0;
-					if(len % 2 == 0 && len == toOptimize.size()-1){
+					if(len % 2 == 0 && len == toOptimize.size()){
 						s = len /2;
 						nuova.add(new Paint(toOptimize.get(0).getC1() + s, toOptimize.get(0).getR1() + s, s));
-					}
-					
-					if(len < toOptimize.size()-1){
-						for(int k = 0; k < len+1; k++){
-							int r = toOptimize.get(k).getR1()+k;
-							int c1 = toOptimize.get(0).getC1();
-							int c2 = toOptimize.get(toOptimize.size()-1).getC2();
-							nuova.add(new Paint(r, r, c1, c2));		
+					}else{					
+						if(len < toOptimize.size()-1){
+							for(int k = 0; k < len+1; k++){
+								int r = toOptimize.get(k).getR1()+k;
+								int c1 = toOptimize.get(0).getC1();
+								int c2 = toOptimize.get(toOptimize.size()-1).getC2();
+								nuova.add(new Paint(r, r, c1, c2));		
+							}
 						}
 					}
-					
 					for(Paint k : toOptimize){
 						lista.get(lista.indexOf(k)).setRemovable();
 					}
@@ -179,17 +178,18 @@ public class MainClass {
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
 					int s = 0;
-					if(len % 2 == 0 && len == toOptimize.size()-1){
+					if(len % 2 == 0 && len == toOptimize.size()){
 						s = len /2;
 						nuova.add(new Paint(toOptimize.get(0).getR1() + s, toOptimize.get(0).getC1() + s, s));
-					}
-					
-					if(len < toOptimize.size()-1){
-						for(int k = 0; k < len+1; k++){
-							int c = toOptimize.get(k).getC1()+k;
-							int r1 = toOptimize.get(0).getR1();
-							int r2 = toOptimize.get(toOptimize.size()-1).getR2();
-							nuova.add(new Paint(r1, r2, c, c));		
+					}else{
+		
+						if(len < toOptimize.size()-1){
+							for(int k = 0; k < len+1; k++){
+								int c = toOptimize.get(k).getC1()+k;
+								int r1 = toOptimize.get(0).getR1();
+								int r2 = toOptimize.get(toOptimize.size()-1).getR2();
+								nuova.add(new Paint(r1, r2, c, c));		
+							}
 						}
 					}
 					

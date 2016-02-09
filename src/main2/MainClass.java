@@ -192,47 +192,11 @@ public class MainClass {
 
 
 				if(toOptimize.size() > 1){
-					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
-//					boolean remove = false;
+					int size = toOptimize.size()-1;
+					nuova = squareDetection(toOptimize, toOptimize.get(0).getR1(), toOptimize.get(0).getC1(), toOptimize.get(size).getR2(), toOptimize.get(size).getC2());
 					
-//					squareDetection(toOptimize, r1, c1, r4, c4);
-					//eliminazione di tutte le operazioni incriminate siamo sicuri che square sistema tutto
-					//svuoto toOptimize
-					
-					while (len <= toOptimize.size()-1) {
-						if (len >= (toOptimize.size() - 1) / len) {
-							int s = 0;
-							if (len % 2 != 0) {
-								nuova.add(new Paint(toOptimize.get(0).getR1(),
-										len, toOptimize.get(len).getR1(), len));
-								len--;
-							}
-
-							s = len / 2;
-
-							//forma il quadrato ed elimina i comandi rimanenti
-							nuova.add(new Paint(toOptimize.get(0).getR1() + s,
-									toOptimize.get(0).getC1() + s, s));
-
-							for (int k = 0; k < len; k++) {
-								Paint toRem = toOptimize.get(k);
-								lista.get(lista.indexOf(toRem)).setRemovable();
-							}
-
-						} else {
-							for (int k = 0; k < len + 1; k++) {
-								int c = toOptimize.get(k).getC1() + k;
-								int r1 = toOptimize.get(0).getR1();
-								int r2 = toOptimize.get(
-										toOptimize.size() - 1).getR2();
-								nuova.add(new Paint(r1, r2, c, c));
-							}
-
-							for (Paint k : toOptimize) {
-								lista.get(toOptimize.indexOf(k)).setRemovable();
-							}
-						}
-						len*=2;
+					for (Paint k : toOptimize) {
+						lista.get(toOptimize.indexOf(k)).setRemovable();
 					}
 					toOptimize.clear();
 				}
@@ -314,7 +278,7 @@ public class MainClass {
 		return riga;
 	}
 	
-	private static ArrayList<Paint> squareDetection(Paint l,int r1,int c1,int r4,int c4){
+	private static ArrayList<Paint> squareDetection(ArrayList<Paint> vecchia,int r1,int c1,int r4,int c4){
 		int base = c4 - c1;
 		int altezza = r4 - r1;
 		ArrayList<Paint> nuova = null;

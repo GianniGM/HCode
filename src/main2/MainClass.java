@@ -191,11 +191,11 @@ public class MainClass {
 				}
 
 
-				if(toOptimize.size() > 0){
+				if(toOptimize.size() > 1){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
 //					boolean remove = false;
 					
-					//squareDetection(toOptimize, r1, r2, )
+//					squareDetection(toOptimize, r1, c1, r4, c4);
 					//eliminazione di tutte le operazioni incriminate siamo sicuri che square sistema tutto
 					//svuoto toOptimize
 					
@@ -313,5 +313,39 @@ public class MainClass {
 		
 		return riga;
 	}
+	
+	private static ArrayList<Paint> squareDetection(Paint l,int r1,int c1,int r4,int c4){
+		int base = c4 - c1;
+		int altezza = r4 - r1;
+		ArrayList<Paint> nuova = null;
+		
+		// controllo utile per capire se conviene disegnare un quadrato o delle paint_line
+	
+		//ciclo!!! smusso i lati finché non ho base == altezza
+		if(base == altezza){
+			//quadrato
+			//ok è perfetto
+		}else if (base < altezza){
+			if(base < altezza/base){
+				//disegno la prima riga (r1,r1, c1, c4)
+				//incremento r1
+				//costruisco quadrato ricorsivamente richiamo questa funzione con altezza aggiornata
+			}else{
+				//costruisco #base righe verticali di lunghezza #altezza
+			}
+		}else{
+			//altezza < base
+			if(altezza < base/altezza){
+				//disegno la prima riga (r1, r4, c1, c1)
+				//incremento c1
+				//chiamo questa funziona con le coordinate aggiorante
+			}else{
+				//costruisco #altezza righe orizzontali di lunghezza#altezza
+			}
+		}
+		
+		return nuova;
+	}
+
 }
 

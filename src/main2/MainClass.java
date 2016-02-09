@@ -1,7 +1,10 @@
 package main2;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -54,18 +57,27 @@ public class MainClass {
 	    hOptimize(comandiRighe);
 	    vOptimize(comandiColonne);
 	    
+	    PrintWriter out = null;
+	    try {
+			out = new PrintWriter(new File("/Users/Gianni/Desktop/output.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	    if(comandiRighe.size()<= comandiColonne.size()){
-		    System.out.println(comandiRighe.size());
+		    out.println(comandiRighe.size());
 		    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
-				System.out.println(it.next().toString());			
+				out.println(it.next().toString());			
 			}    
 	    }else{
-		    System.out.println(comandiColonne.size());
+		    out.println(comandiColonne.size());
 		    for (Iterator<Paint> it = comandiColonne.iterator(); it.hasNext();) {
-				System.out.println(it.next().toString());			
+				out.println(it.next().toString());			
 			}    
 	    }
-        in.close(); 
+        in.close();
+        out.close();
 	}
 
 
@@ -106,7 +118,7 @@ public class MainClass {
 					
 					if(len < toOptimize.size()-1){
 						for(int k = 0; k < len+1; k++){
-							int r = toOptimize.get(k).getR1();
+							int r = toOptimize.get(k).getR1()+k;
 							int c1 = toOptimize.get(0).getC1();
 							int c2 = toOptimize.get(toOptimize.size()-1).getC2();
 							nuova.add(new Paint(r, r, c1, c2));		
@@ -163,6 +175,7 @@ public class MainClass {
 					}
 				}
 
+
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
 					int s = 0;
@@ -173,7 +186,7 @@ public class MainClass {
 					
 					if(len < toOptimize.size()-1){
 						for(int k = 0; k < len+1; k++){
-							int c = toOptimize.get(k).getC1();
+							int c = toOptimize.get(k).getC1()+k;
 							int r1 = toOptimize.get(0).getR1();
 							int r2 = toOptimize.get(toOptimize.size()-1).getR2();
 							nuova.add(new Paint(r1, r2, c, c));		

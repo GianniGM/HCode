@@ -16,8 +16,7 @@ public class MainClass {
 		
 		//Scanner in = new Scanner(System.in);
 		Scanner in = null;
-		ArrayList<Paint> comandiRighe = new ArrayList<Paint>();
-		ArrayList<Paint> comandiColonne = new ArrayList<Paint>();
+		ArrayList<Paint> cSquare = new ArrayList<Paint>();
 
 		int[][] matrix = null;
 		
@@ -42,22 +41,55 @@ public class MainClass {
         
 	    for (int i = 0; i < height; i++) {
 	        matrix[i] =  convert(in.nextLine());
-	    	toPaintHorizontalLine(matrix[i], i, height, length, comandiRighe);
 	    }
-
-	    for(int col = 0; col < length; col++)	
-	    	toPaintVerticalLine(matrix, col, height, length , comandiColonne);
-
-//	    aggiungere il lavoro di ottimizzazzione
-//	    Ricerca se il valore delle righe è uguale allora
-//	    	se il valore delle colonne è consecutivo
-//	    		se il numero di righe uguali è uguale al numero di comandi trovati 
-//	    		che è uguale ai valori consecutivi è un quadrato
 	    
-	    hOptimize(comandiRighe);
-	    vOptimize(comandiColonne);
+	    in.close();
 	    
-	    PrintWriter out = null;
+	    int subLenght;
+	    int subHeight;
+	    int somma = 0;
+	    int mask = 3; 
+	    for(int i = 1; i < height -1; i++){
+	    	System.out.print("processing row (" + i + ")<");
+	    	subHeight = height;
+	    	
+	    	for(int j= 1; j< length -1; j++){
+	    		subLenght = length;
+	    		
+	    		while(subLenght - (j - 1) > mask && subHeight - (i-1)> mask){
+	    			
+	    		
+	    			somma = sum(matrix, i-1, j-1, subHeight, subLenght );
+	    			cSquare.addAll(squareDetection(5, 10, 12, 20));
+	    			if(somma == (subHeight-i) * (subLenght-j)){
+		    			System.out.print(somma + " : ");
+	    				cSquare.addAll(squareDetection(i-1, j-1, subHeight, subLenght));
+	    				blank(matrix, i-1, j-1, subHeight, subLenght);
+//	    			}else if( somma-1 == subHeight * subLenght){
+//	    				cSquare.addAll(squareDetection(i-1, j-1, i-1+subHeight, j-1+subLenght));
+//	    				blank(matrix, i-1, j-1, subHeight, subLenght);
+//	    				new erase point
+			    		System.out.print("#");
+
+	    			}
+	    			
+	    		    if(subLenght > subHeight){
+	    		    	subLenght --;
+				    }else if(subHeight == subLenght){
+				    	subHeight --;
+				    	subLenght --;
+				    }else{
+				    	subHeight--;
+				    }
+	    		    
+   	    		}
+	    		
+	    	}
+		    System.out.println(">");
+	    }
+	    
+	    
+	    PrintWriter out = null;  
 	    try {
 			out = new PrintWriter(new File("/Users/Gianni/Desktop/output.txt"));
 		} catch (FileNotFoundException e) {
@@ -65,19 +97,50 @@ public class MainClass {
 			e.printStackTrace();
 		}
 	    
-	    if(comandiRighe.size()<= comandiColonne.size()){
-		    out.println(comandiRighe.size());
-		    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
-				out.println(it.next().toString());			
-			}    
-	    }else{
-		    out.println(comandiColonne.size());
-		    for (Iterator<Paint> it = comandiColonne.iterator(); it.hasNext();) {
-				out.println(it.next().toString());			
-			}    
-	    }
-        in.close();
+
+	    out.println(cSquare.size());
+	    for (Iterator<Paint> it = cSquare.iterator(); it.hasNext();) {
+			out.println(it.next().toString());			
+		}    
+	    
+	    System.out.println("done");
+	    
+//	    if(comandiRighe.size()< comandiColonne.size()){
+//		    out.println(comandiRighe.size());
+//		    for (Iterator<Paint> it = comandiRighe.iterator(); it.hasNext();) {
+//				out.println(it.next().toString());			
+//			}    
+//	    }else{
+//		    out.println(comandiColonne.size());
+//		    for (Iterator<Paint> it = comandiColonne.iterator(); it.hasNext();) {
+//				out.println(it.next().toString());			
+//			}    
+//	    }
+	    
         out.close();
+	}
+
+
+	private static void blank(int[][] matrix, int i, int j, int subHeight,int subLenght) {
+		
+		for(int k = i; k < subHeight; k++){
+			for(int z = j; z < subLenght; z++){
+				matrix[k][z]=0;
+			}
+		}
+		
+	}
+
+
+	private static int sum(int[][] matrix, int i, int j, int subHeight, int subLenght) {
+		int sum = 0;
+		
+		for(int k = i; k < subHeight; k++){
+			for(int z = j; z < subLenght; z++){
+				sum += matrix[k][z];
+			}
+		}
+		return sum;
 	}
 
 
@@ -90,13 +153,12 @@ public class MainClass {
 			if(!i.isRemovable()){
 				for (Paint j : lista) {
 					if(i.getR1() == j.getR1() && i.getR2() == j.getR2()){
-						if(i.getC1() == j.getC2()){
-							temp = i;	
-						}else if(temp.getC1()+1 == j.getC1()){
+						temp = i;	
+						if(temp.getC1()+1 == j.getC1()){
 							//insert first command to optimize						
-							if(!toOptimize.contains(i) && temp == i){
-								toOptimize.add(i);
-							}
+//							if(!toOptimize.contains(i) && temp == i){
+//								toOptimize.add(i);
+//							}
 							
 							temp = j;
 							
@@ -108,48 +170,29 @@ public class MainClass {
 					}
 				}
 
-				if(toOptimize.size() > 0){
-					int len = toOptimize.get(0).getR2() - toOptimize.get(0).getR1();
+				if(toOptimize.size() > 1){
+					int size = toOptimize.size()-1;
+					//se non funziona con c1 e c2 provare ad inserire la dimensione
+					nuova.addAll(squareDetection(toOptimize.get(0).getR1(), toOptimize.get(size).getC1(), toOptimize.get(0).getR2(), toOptimize.get(size).getC2()));
 					
-					if (len < toOptimize.size()) {
-						if (len >= (toOptimize.size() - 1) / len) {
-							int s = 0;
-							if (len % 2 != 0 && len < toOptimize.size()) {
-								nuova.add(new Paint(len, len, toOptimize.get(0)
-										.getC1(), toOptimize.get(0).getC2()));
-								len--;
-							}
-
-							s = len / 2;
-
-							//forma il quadrato ed elimina i comandi rimanenti
-							nuova.add(new Paint(toOptimize.get(0).getR1() + s,
-									toOptimize.get(0).getC1() + s, s));
-
-							for (int k = 0; k < len; k++) {
-								Paint toRem = toOptimize.get(k);
-								lista.get(lista.indexOf(toRem)).setRemovable();
-							}
-						} else {
-							for (int k = 0; k < len; k++) {
-								int r = toOptimize.get(k).getR1() + k;
-								int c1 = toOptimize.get(0).getC1();
-								int c2 = toOptimize.get(
-										toOptimize.size() - 1).getC2();
-								nuova.add(new Paint(r, r, c1, c2));
-							}
-
-							for (Paint k : toOptimize) {
-								lista.get(toOptimize.indexOf(k)).setRemovable();
-							}
+					if(nuova.size()>0){
+						for (Paint k : toOptimize) {
+							lista.get(toOptimize.indexOf(k)).setRemovable();
 						}
 					}
-					toOptimize.clear();
 				}
+				toOptimize.clear();
 			}
 		
 		}
 		
+		for (int i = 0; i < nuova.size(); i++) {
+			for (int j = 0; j < nuova.size(); j++) {
+				if(nuova.get(i).equals(nuova.get(j)) && i != j){
+					nuova.remove(j);
+				}
+			}
+		}
 		
 		for (Paint k : lista) {
 			if(k.isRemovable()){
@@ -171,14 +214,12 @@ public class MainClass {
 			if(!i.isRemovable()){
 				for (Paint j : lista) {
 					if(i.getC1() == j.getC1() && i.getC2() == j.getC2()){
-						if(i.getR1() == j.getR2()){
-							temp = i;
-							
-						}else if(temp.getR1()+1 == j.getR1()){
+						temp = i;
+						if(temp.getR1()+1 == j.getR1()){
 							//insert first command to optimize						
-							if(!toOptimize.contains(i) && temp == i){
-								toOptimize.add(i);
-							}
+//							if(!toOptimize.contains(i) && temp == i){
+//								toOptimize.add(i);
+//							}
 							
 							temp = j;
 							
@@ -191,6 +232,7 @@ public class MainClass {
 				}
 
 
+<<<<<<< Updated upstream
 				if(toOptimize.size() > 0){
 					int len = toOptimize.get(0).getC2() - toOptimize.get(0).getC1();
 //					boolean remove = false;
@@ -233,19 +275,38 @@ public class MainClass {
 							}
 						}
 						len*=2;
+=======
+				if(toOptimize.size() > 1){
+					int size = toOptimize.size()-1;
+					//se non funziona con c1 e c2 provare ad inserire la dimensione
+					nuova.addAll(squareDetection(toOptimize.get(0).getR1(), toOptimize.get(0).getC1(), toOptimize.get(size).getR2(), toOptimize.get(size).getC2()));
+
+					if(nuova.size()>0){
+						for (Paint k : toOptimize) {
+							lista.get(toOptimize.indexOf(k)).setRemovable();
+						}
+>>>>>>> Stashed changes
 					}
-					toOptimize.clear();
 				}
+				toOptimize.clear();
 			}
 		
 		}
 		
+		for (int i = 0; i < nuova.size(); i++) {
+			for (int j = i; j < nuova.size(); j++) {
+				if(nuova.get(i).equals(nuova.get(j)) && i != j){
+					nuova.remove(j);
+				}
+			}
+		}
 		
 		for (Paint k : lista) {
 			if(k.isRemovable()){
 				toOptimize.add(k);
 			}
 		}
+		
 		lista.removeAll(toOptimize);
 		lista.addAll(nuova);
 		//se è paintable per il quadrato allora aggiungi un quadrato, sennò aggiungi N linee verticale stando attenti che la cosa convenga
@@ -313,5 +374,87 @@ public class MainClass {
 		
 		return riga;
 	}
+<<<<<<< Updated upstream
+=======
+	
+	private static ArrayList<Paint> squareDetection(int r1,int c1,int r4,int c4){
+		int base = c4 - c1;
+		int altezza = r4 - r1;
+		ArrayList<Paint> nuova = new ArrayList<Paint>();
+		
+		// controllo utile per capire se conviene disegnare un quadrato o delle paint_line
+		//IL CASO BASE E' FINCHE LTEZZA E BASE SONO MAGGIORI UGUALI A ZERO
+		//ciclo!!! smusso i lati finché non ho base == altezza
+		System.out.print("-");
+		
+		if (base > 0 && altezza > 0) {
+			if (base == altezza) {
+				int s;
+				if(altezza % 2 != 0){
+					nuova.add(new Paint(r1, r4, c1, c1));
+					nuova.add(new Paint(r1, r1, c1, c4));
+					c1++;
+					r1++;
+					altezza--;
+					base--;
+				}
+				s = altezza / 2;
+				nuova.add(new Paint(r1 + s, c1 + s, s));
+				
+				
+					for (int j = 0; j < nuova.size(); j++) {
+						for (int i = 0; i < nuova.size(); i++) {
+							if(nuova.contains(nuova.get(i)) && i !=nuova.indexOf(nuova.get(j))){
+								nuova.remove(i);
+							}
+						}
+					}
+					
+				return nuova;
+			} else if (base < altezza) {
+				if (base < altezza / base) {
+					//costruisco #base righe verticali di lunghezza #altezza
+					nuova.add(new Paint(r1, r4, c1, c1));
+					nuova.addAll(squareDetection(r1, c1 + 1, r4, c4));
+				} else {
+					//disegno la prima riga orizzontale 
+					//incremento r1
+					//costruisco quadrato ricorsivamente richiamo questa funzione con altezza aggiornata
+					nuova.add(new Paint(r1, r1, c1, c4));
+					nuova.addAll(squareDetection(r1 + 1, c1, r4, c4));
+				}
+			} else {
+				//altezza < base
+				if (altezza < base / altezza) {
+					//disegno la prima riga (r1, r4, c1, c1)
+					//incremento c1
+					//chiamo questa funziona con le coordinate aggiorante
+					nuova.add(new Paint(r1, r1, c1, c4));
+					nuova.addAll(squareDetection(r1 + 1, c1, r4, c4));
+				} else {
+					//costruisco #altezza righe orizzontali di lunghezza#altezza
+					nuova.add(new Paint(r1, r4, c1, c1));
+					nuova.addAll(squareDetection(r1, c1 + 1, r4, c4));
+				}
+			}
+//		}else{
+//			//caso base
+//			if (base == altezza && altezza % 2 == 0) {
+//				int s = altezza / 2;
+//				nuova.add(new Paint(r1 + s, c1 + s, s));
+//				return nuova;
+//			} else if (base <= altezza) {
+//				nuova.add(new Paint(r1, r4, c1, c1));
+//				return nuova;
+//			} else {
+//				//altezza < base
+//				nuova.add(new Paint(r1, r1, c1, c4));
+//				return nuova;
+//			}
+		}
+		return nuova;
+	}
+
+>>>>>>> Stashed changes
 }
 

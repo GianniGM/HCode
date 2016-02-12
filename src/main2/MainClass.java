@@ -112,7 +112,7 @@ public class MainClass {
 	    
 	    PrintWriter out = null;  
 	    try {
-			out = new PrintWriter(new File("/Users/Gianni/Desktop/output.txt"));
+			out = new PrintWriter(new File("output.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

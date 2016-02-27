@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Test {
 	private static int[][] matrix = null;
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// 
 		Scanner in = null;
 		if(args.length != 3){
 			System.err.println("Errore!!! Inserisci:");
@@ -21,7 +21,7 @@ public class Test {
 		try {
 			in = new Scanner(new BufferedReader(new FileReader(args[2])));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// 
 			if(args.length > 0)
 				System.err.println("Error: file not found!");
 			else

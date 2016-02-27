@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class MainClass {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		//Scanner in = new Scanner(System.in);
 		Scanner in = null;
@@ -24,7 +23,7 @@ public class MainClass {
 		try {
 			in = new Scanner(new BufferedReader(new FileReader(args[0])));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			// 
 			if(args.length > 0)
 				System.err.println("Error: file not found!");
 			else
@@ -61,7 +60,7 @@ public class MainClass {
 	    try {
 			out = new PrintWriter(new File("output.txt"));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// 
 			e.printStackTrace();
 		}
 	    
